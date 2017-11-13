@@ -1,0 +1,20 @@
+{
+  "name": "foxyext",
+  "version": "1.2.13",
+  "description": "Web Extension for Foxy Agent",
+  "dependencies": {},
+  "devDependencies": {
+    "web-ext": "^2.2.2"
+  },
+  "scripts": {
+    "lint": "web-ext lint",
+    "test": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tamarahills/foxyext"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

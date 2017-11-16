@@ -217,27 +217,53 @@ port.onMessage.addListener((response) => {
     case 'SHUTUP':
       toggleShutup();
       return;
-    case 'BOOKMARK':
-      template = `
-      <div class="panel-item-header">
-        <img src="./resources/bookmark-icon.png" height="20" width="20"
-          style="vertical-align: middle;">
-        <span class="speechtext">${response.utterance}</span>
-        <a href="/" class="panel-item-close">
-          <img src="resources/close-16.svg" alt="" style="float: right">
-        </a>
-      </div>
-      `;
-      icon = '';
-      text = '';
-      iDiv.innerHTML = template;
-      iDiv.className = 'bookmark panel-item';
 
-      iframe = sidebar.createElement('iframe');
-      iframe.frameBorder = 0;
-      iframe.width = 300;
-      iframe.setAttribute('src', '/sidebar/bookmark/panelbookmark.html');
-      break;
+case 'SCREENSHOT':
+  template = `
+    <div class="panel-item-header">
+      <img src="./resources/screenshot.png" height="20" width="20"
+        style="vertical-align: middle;" />
+      <span class="speechtext">${response.utterance}</span>
+      <a href="/" class="panel-item-close">
+        <img src="resources/close-16.svg" alt="" style="float: right">
+      </a>
+    </div>
+  `;
+  icon = '';
+  text = '';
+  iDiv.innerHTML = template;
+  iDiv.className = 'screenshot panel-item';      
+  iframe = sidebar.createElement('iframe');
+  iframe.frameBorder = 0;
+  iframe.className = 'panel-item-frame';
+  iframe.width = 300;
+  iframe.height = 80;
+  iframe.setAttribute('src', '/sidebar/screenshot/panelscreenshot.html');
+  iframe.scrolling = 'no';
+  break;
+
+  case 'BOOKMARK':
+  template = `
+    <div class="panel-item-header">
+      <img src="./resources/bookmark-icon.png" height="20" width="20"
+        style="vertical-align: middle;">
+      <span class="speechtext">${response.utterance}</span>
+      <a href="/" class="panel-item-close">
+        <img src="resources/close-16.svg" alt="" style="float: right">
+      </a>
+    </div>
+  `;
+  icon = '';
+  text = '';
+  iDiv.innerHTML = template;
+  iDiv.className = 'bookmark panel-item';
+
+  iframe = sidebar.createElement('iframe');
+  iframe.frameBorder = 0;
+  iframe.width = 300;
+  iframe.setAttribute('src', '/sidebar/bookmark/panelbookmark.html');
+  break; 
+  
     default: //This is also 'NONE'. If we add another, may need to break it out
     template = `
     <div class="panel-item-header">

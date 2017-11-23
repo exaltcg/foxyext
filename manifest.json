@@ -28,6 +28,8 @@
 
     "permissions": ["nativeMessaging",  "bookmarks", "tabs", "activeTab", "<all_urls>"],
 
+    "web_accessible_resources": ["/sidebar/*"],
+
     "commands": {
       "_execute_sidebar_action": {
         "suggested_key": {

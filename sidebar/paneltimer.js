@@ -10,19 +10,32 @@ function init() {
   var deadline = new Date(Date.parse(new Date()) + duration * 1000);
   initializeClock('clockdiv', deadline, tag);
   moveProgress.startProgress(duration * 10);
-  
+
   document.querySelector('.btn-reset').addEventListener('click', function(e) {
     e.preventDefault();
     var deadline = new Date(Date.parse(new Date()) + duration * 1000);
     initializeClock('clockdiv', deadline, tag);
     moveProgress.startProgress(duration * 10);
-  }, false);
+  });
 
   document.querySelector('.btn-stop').addEventListener('click', function(e) {
     e.preventDefault();
     initializeClock('clockdiv', new Date(), tag);
     moveProgress.stopProgress();
-  }, false);
+  });
+
+  const popupHandle = (message) => {
+    if (message.stop) {
+      initializeClock('clockdiv', new Date(), tag);
+      moveProgress.stopProgress();
+    }
+    else if (message.reset) {
+    var deadline = new Date(Date.parse(new Date()) + duration * 1000);
+    initializeClock('clockdiv', deadline, tag);
+    moveProgress.startProgress(duration * 10);
+  }
+};
+  browser.runtime.onMessage.addListener(popupHandle);
 }
 
 function getParameterByName(name, url) {
@@ -65,11 +78,13 @@ function initializeClock(id, endtime, tag) {
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + 'm';
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2) + 's';
 
+    browser.storage.local.set({timeRemaining: t.total});
+
     if (t.total <= 0) {
       clearInterval(timeinterval);
       var audio = new Audio('chime.mp3');
       audio.play();
-      
+
       minutesSpan.innerHTML = '';
       secondsSpan.innerHTML = 'Done!';
       secondsSpan.style.paddingLeft = '20px';
@@ -81,9 +96,9 @@ function initializeClock(id, endtime, tag) {
 }
 
 var moveProgress = (function(interval) {
-  var elem = document.getElementById('progres-line');   
+  var elem = document.getElementById('progres-line');
   var width = 0;
-  var id; 
+  var id;
   function startProgress(interval) {
     if (id !== undefined) {
       clearInterval(id);
@@ -92,27 +107,25 @@ var moveProgress = (function(interval) {
       elem.style.backgroundColor = '#0675d3';
       id = setInterval(frame, interval);
   }
-    else if(!id) {
+    else if (!id) {
       id = setInterval(frame, interval);
     }
-  };
-  function frame() {    
+  }
+  function frame() {
     if (width >= 100) {
       elem.style.backgroundColor = '#30e60b';
       clearInterval(id);
     } else {
-      width++; 
-      elem.style.width = width + '%'; 
+      width++;
+      elem.style.width = width + '%';
     }
-  };
-  function stopProgress() {    
+  }
+  function stopProgress() {
     if (id !== undefined) {
       clearInterval(id);
       elem.style.width = '100%';
       elem.style.backgroundColor = '#30e60b';
     }
   }
-  return { startProgress: startProgress,
-           stopProgress:  stopProgress 
-  };
+  return { startProgress, stopProgress };
 })();

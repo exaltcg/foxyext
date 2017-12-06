@@ -1,11 +1,10 @@
 var myWindowId, pocketuser, pocket_access_token, pocket_consumer_token,
   ga_uuid, ga_property, ga_visitor, help_visible;
-
-var mute_state = false;
+  var mute_state = false;
 
 var port = browser.runtime.connectNative("foxycli");
 console.log('CONNECT NATIVE CALLED');
-
+browser.storage.local.set({active: false, mute_state});
 /*
 Listen for messages from the app.
 */
@@ -75,6 +74,13 @@ port.onMessage.addListener((response) => {
         iframe.setAttribute("src", '/sidebar/paneltimer.html?duration='
           + response.param);
       }
+      browser.notifications.create('timer', {
+        type: 'basic',
+        iconUrl: browser.extension.getURL('./sidebar/resources/notification-timer-active.svg'),
+        title: `${Math.ceil(response.param / 60)} minutes starting....now!`,
+        message: '',
+      });
+      browser.storage.local.set({active: 'timer', timer: { duration: response.param }});
       break;
     case 'SPOTIFY':
     template = `
@@ -428,18 +434,29 @@ browser.windows.getCurrent({populate: true}).then((windowInfo) => {
 
   var mute_button = document.getElementById('listening');
 
-  mute_button.addEventListener('click', function() {
-    var img = mute_button.getAttribute('src');
+  const toggleMute = (message) => {
+    if (message.mute_state) {
+      mute_button.setAttribute('src', './resources/disabled.svg');
+    } else {
+      mute_button.setAttribute('src', './resources/listening.svg');
+    }
+    mute_state = message.mute_state;
+    console.log('mute button pushed');
+  };
 
+  mute_button.addEventListener('click', function() {
     if (!mute_state) {
       mute_button.setAttribute('src', './resources/disabled.svg')
     } else {
       mute_button.setAttribute('src', './resources/listening.svg')
     }
     mute_state = !mute_state;
+    browser.storage.local.set({mute_state});
     console.log('mute button pushed');
   });
-});
+  browser.runtime.onMessage.addListener(toggleMute);
+})
+.catch(e => console.error(e));
 
 function resizeIframe(obj) {
   obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';

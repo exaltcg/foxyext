@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div class="popup-box">
+      <ul class="list">
+        <li class="list__item">
+          <a href="#" class="list__link turn-off-btn">
+            <div class="image-holder">
+              <img src="/sidebar/resources/confused.svg" alt="image" class="turn-off-img">
+            </div>
+            <span class="item-title">Turn on/off</span>
+          </a>
+        </li>
+        <li class="list__item">
+          <a href="#" class="list__link">
+            <div class="image-holder">
+              <img src="/sidebar/resources/questions.png" alt="image">
+            </div>
+            <span class="item-title">Help</span>
+          </a>
+        </li>
+        <li class="list__item">
+          <a href="#" class="list__link">
+            <div class="image-holder">
+              <img src="/sidebar/resources/unmute.png" alt="image">
+            </div>
+            <span class="item-title">Add skils</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div id="timer"></div>
+    <div class="popup-box">
+      <span class="title">Resent Requests</span>
+        <ul class="list">
+          <li class="list__item">
+            <a href="#" class="list__link">
+              <div class="image-holder">
+                <img src="/sidebar/resources/sun.svg" alt="image">
+              </div>
+              <span class="item-title">Weather in San Francisco (65)</span>
+            </a>
+          </li>
+          <li class="list__item">
+            <a href="#" class="list__link">
+              <div class="image-holder">
+                <img src="/sidebar/resources/Spotify_logo_without_text.svg" alt="image">
+              </div>
+              <span class="item-title">Play The Beatles</span>
+            </a>
+          </li>
+          <li class="list__item">
+            <a href="#" class="list__link">
+              <div class="image-holder">
+                <img src="/sidebar/resources/timer.svg" alt="image">
+              </div>
+              <span class="item-title">Time 1 hour</span>
+            </a>
+          </li>
+          <li class="list__item">
+            <a href="#" class="list__link">
+              <div class="image-holder">
+                <img src="/sidebar/resources/timer.svg" alt="image">
+              </div>
+              <span class="item-title">Time 2 minute</span>
+            </a>
+          </li>
+          <li class="list__item">
+            <a href="#" class="list__link">
+              <div class="image-holder">
+                <img src="/sidebar/resources/rain.svg" alt="image">
+              </div>
+              <span class="item-title">Weather in Athens, GA (52)</span>
+            </a>
+          </li>
+          <li class="list__item">
+            <a href="#" class="list__link">
+              <div class="image-holder">
+                <img src="/sidebar/resources/npricon.png" alt="image">
+              </div>
+              <span class="item-title">Play NPR (Wait Wait..Don't Tell Me!)</span>
+            </a>
+          </li>
+          <li class="list__item sub-list">
+            <a href="#" class="list__link">
+              <div class="image-holder">
+                <img src="/sidebar/resources/clock-outline.svg" alt="image">
+              </div>
+              <span class="item-title">Yesterday</span>
+            </a>
+            <ul class="list inner-list">
+              <li class="list__item">
+                <a href="#" class="list__link">
+                  <div class="image-holder">
+                    <img src="/sidebar/resources/sun.svg" alt="image">
+                  </div>
+                  <span class="item-title">Weather in San Francesko (65)</span>
+                </a>
+              </li>
+              <li class="list__item">
+                <a href="#" class="list__link">
+                  <div class="image-holder">
+                    <img src="/sidebar/resources/Spotify_logo_without_text.svg" alt="image">
+                  </div>
+                  <span class="item-title">Play The Beatles</span>
+                </a>
+              </li>
+              <li class="list__item">
+                <a href="#" class="list__link">
+                  <div class="image-holder">
+                    <img src="/sidebar/resources/timer.svg" alt="image">
+                  </div>
+                  <span class="item-title">Time 1 hour</span>
+                </a>
+              </li>
+              <li class="list__item">
+                <a href="#" class="list__link">
+                  <div class="image-holder">
+                    <img src="/sidebar/resources/timer.svg" alt="image">
+                  </div>
+                  <span class="item-title">Time 2 minute</span>
+                </a>
+              </li>
+              <li class="list__item">
+                <a href="#" class="list__link">
+                  <div class="image-holder">
+                    <img src="/sidebar/resources/rain.svg" alt="image">
+                  </div>
+                  <span class="item-title">Weather in Athens, GA (52)</span>
+                </a>
+              </li>
+              <li class="list__item">
+                <a href="#" class="list__link">
+                  <div class="image-holder">
+                    <img src="/sidebar/resources/npricon.png" alt="image">
+                  </div>
+                  <span class="item-title">Play NPR (Wait Wait..Don't Tell Me!)</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </div>
+    <script src="../sidebar/lib/timer.js"></script>
+    <script src="popup.js"></script>
+    <script type="text/html" id="card-timer">
+      <div class="timer-container">
+        <div class="popup-box">
+          <span class="title timer-title">{{timerTitle}}</span>
+          <div class="timer">
+            <div class="loading-block">
+              <span class="loading-block__title"></span>
+              <div class="loading-block__field" id="popup-progress-line"></div>
+            </div>
+            <div class="timer-button-block">
+              <button class="timer-btn btn-stop" type="button">
+                <img class="timer-btn__image" src="/sidebar/resources/stop-button.svg" alt="image">
+                <span class="timer-btn__title">Stop</span>
+              </button>
+              <button class="timer-btn btn-reset" type="button">
+                <img class="timer-btn__image" src="/sidebar/resources/reset.svg" alt="image">
+                <span class="timer-btn__title">Reset</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </script>
+  <script type="text/template" id="card-weather">
+    <div class="weather-container">
+      <div class="popup-box">
+        <span class="title weather-title">Weather in...</span>
+        <img class="timer-btn__image" src="/sidebar/resources/pause.svg" alt="image">
+      </div>
+    </div>
+  </script>
+</body>
+</html>

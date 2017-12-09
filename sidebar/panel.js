@@ -16,6 +16,7 @@ port.onMessage.addListener((response) => {
   console.log('RECEIVED APP MESSAGE');
   console.log("Received: " + JSON.stringify(response));
 
+  let isResponseRecognized = true;
   var sidebar = getSidebar();
   var iDiv = sidebar.createElement('div');
 
@@ -263,6 +264,7 @@ port.onMessage.addListener((response) => {
       iframe.setAttribute('src', '/sidebar/bookmark/panelbookmark.html');
       break;
     default: //This is also 'NONE'. If we add another, may need to break it out
+    isResponseRecognized = false;
     template = `
     <div class="panel-item-header">
     <img src="./resources/confused.svg" height="20" width="20"
@@ -305,6 +307,18 @@ port.onMessage.addListener((response) => {
   } else {
     sidebar.body.appendChild(iDiv);
   }
+
+  if (isResponseRecognized) {
+    // {"cmd":"TIMER","param":600,"param2":"","utterance":"\"Set a timer for ten minutes.\""}
+    browser.storage.local
+      .get('recents')
+      .then(({ recents }) => {
+        recents = (recents || []).filter(({ utterance }) => utterance !== response.utterance);
+        recents.unshift(response);
+        recents.splice(7);
+        browser.storage.local.set({ recents });
+      }).catch(console.error);
+  }
 });
 
 function getSidebar() {
@@ -325,8 +339,8 @@ function getSidebar() {
 // TODO:  Share this code so we don't have to duplicate.  We need to add a
 // require.js or something similar to share this.
 function findProperWeatherImage(weatherDesc) {
-  var imagefile = '';
-  var desc = weatherDesc.toLowerCase()
+  var imageFile = '';
+  var desc = weatherDesc.toLowerCase();
   if (desc.indexOf('sun') !== -1) {
       imageFile = './resources/sun.svg';
   } else if (desc.indexOf('cloud') !== -1) {

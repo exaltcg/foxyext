@@ -42,8 +42,8 @@ function initializeWeather(city, weather, temp, min, max, desc, localTime, local
 }
 
 function findProperWeatherImage(weatherDesc) {
-  var imagefile = '';
-  var desc = weatherDesc.toLowerCase()
+  var imageFile = '';
+  var desc = weatherDesc.toLowerCase();
   if (desc.indexOf('sun') !== -1) {
       imageFile = './resources/sun.svg';
   } else if (desc.indexOf('cloud') !== -1) {

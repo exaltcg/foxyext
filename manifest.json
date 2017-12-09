@@ -28,7 +28,7 @@
       "default_popup": "popup/popup.html"
     },
 
-    "permissions": ["nativeMessaging",  "bookmarks", "tabs", "activeTab", "<all_urls>"],
+    "permissions": ["nativeMessaging",  "bookmarks", "tabs", "activeTab", "<all_urls>", "storage"],
 
     "commands": {
       "_execute_sidebar_action": {
